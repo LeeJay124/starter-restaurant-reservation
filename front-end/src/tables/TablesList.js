@@ -1,45 +1,46 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Table from "./Table";
-import { finishTable, updateReservationStatus } from "../utils/api";
+import { finishTable, listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 // import { listTables } from "../utils/api";
-import { useHistory } from "react-router-dom";
-import { today } from "../utils/date-time";
+// import { useHistory } from "react-router-dom";
+//      
+function TablesList() {
+  // const history = useHistory();
 
-function TablesList({tables}) {
-  const history = useHistory();
-
-  // const [tables, setTables] = useState([]);
+  const [tables, setTables] = useState([]);
   const [tablesError, setTablesError] = useState(null);
 
-  // useEffect(() => {
-  //   async function loadTables() {
-  //     const abortController = new AbortController();
-  //     try {
-  //       const tablesFromAPI = await listTables(abortController.signal);
-  //       setTables(tablesFromAPI);
-  //     } catch (error) {
-  //       if (error) {
-  //         setTablesError(error)
-  //       }
-  //     }
-  //     return () => abortController.abort();
-  //   }
+  useEffect(() => {
+    async function loadTables() {
+      const abortController = new AbortController();
+      try {
+        const tablesFromAPI = await listTables(abortController.signal);
+        setTables(tablesFromAPI);
+      } catch (error) {
+        if (error) {
+          setTablesError(error)
+        }
+      }
+      return () => abortController.abort();
+    }
 
-  //   loadTables();
-  // }, []);
+    loadTables();
+  }, [tables]);
   const finishTableHandler = async (table_id, reservation_id) => {
     const result = window.confirm("Is this table ready to seat new guests? This cannot be undone.");
     if (result) {
       const abortController = new AbortController();
-      const dashboardDate = today();
+      // const dashboardDate = today();
       // const status = "finished";
 
     try {
       // await updateReservationStatus(reservation_id, status, abortController.signal);
         await finishTable(table_id, abortController.signal);
 
-        history.push(`/dashboard?date=${dashboardDate}`);
+        // history.push(`/dashboard?date=${dashboardDate}`);
+        const updatedTables = await listTables(abortController.signal);
+setTables(updatedTables);
       }
     catch (error) {
         if (error) {
