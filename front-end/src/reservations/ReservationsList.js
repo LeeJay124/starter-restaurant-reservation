@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import Reservation from "./Reservation";
-import { updateReservationStatus, listReservations } from "../utils/api";
+import { updateReservationStatus } from "../utils/api";
 import { useHistory } from "react-router-dom";
 import ErrorAlert from "../layout/ErrorAlert";
 
@@ -10,29 +10,29 @@ import ErrorAlert from "../layout/ErrorAlert";
  *  the date for which the user wants to view reservations.
  * @returns {JSX.Element}
  */
-function ReservationsList({newDate}) {
+function ReservationsList({reservations}) {
   const history = useHistory();
     // const {url} = useRouteMatch();
     const [reservationError, setReservationError] = useState(null);
-    const [reservations, setReservations] = useState([]);
+  //   const [reservations, setReservations] = useState([]);
 
-    useEffect(()=>{
-      async function loadDashboard() {
-         const abortController = new AbortController();
-         try{
-           const reservationsFromAPI = await listReservations({ date: newDate }, abortController.signal);
-           const reservationsToDisplay = reservationsFromAPI.filter((item)=> item.status !== "finished");
-           setReservations(reservationsToDisplay);
-         } catch(error){
-           if (error){
-             setReservationError(error)
-           }
-         }
-         return () => abortController.abort();
-         }
+  //   useEffect(()=>{
+  //     async function loadDashboard() {
+  //        const abortController = new AbortController();
+  //        try{
+  //          const reservationsFromAPI = await listReservations({ date: newDate }, abortController.signal);
+  //          const reservationsToDisplay = reservationsFromAPI.filter((item)=> item.status !== "finished");
+  //          setReservations(reservationsToDisplay);
+  //        } catch(error){
+  //          if (error){
+  //            setReservationError(error)
+  //          }
+  //        }
+  //        return () => abortController.abort();
+  //        }
    
-   loadDashboard();
-     }, []);
+  //  loadDashboard();
+  //    }, []);
 
 
 

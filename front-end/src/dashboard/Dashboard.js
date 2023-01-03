@@ -1,10 +1,10 @@
-import React from "react";
-// import ErrorAlert from "../layout/ErrorAlert";
+import React, {useEffect,useState} from "react";
+import ErrorAlert from "../layout/ErrorAlert";
 import ReservationsList from "../reservations/ReservationsList";
 import {next, previous, today} from "../utils/date-time";
 import useQuery from "../utils/useQuery";
 import { Link } from "react-router-dom";
-// import { listReservations } from "../utils/api";
+import { listReservations } from "../utils/api";
 import TablesList from "../tables/TablesList"
 // import LoadTables from "../Comps/LoadTables";
 // import { Col, Row, Container, Button } from "react-bootstrap";
@@ -18,28 +18,28 @@ import TablesList from "../tables/TablesList"
  * @returns {JSX.Element}
  */
 function Dashboard({date}) {
-  // const [reservations, setReservations] = useState([]);
-  // const [reservationsError, setReservationsError] = useState(null);
+  const [reservations, setReservations] = useState([]);
+  const [reservationsError, setReservationsError] = useState(null);
 
 const newDate = useQuery().get("date") ?? date;
 
-//   useEffect(()=>{
-//    async function loadDashboard() {
-//       const abortController = new AbortController();
-//       try{
-//         const reservationsFromAPI = await listReservations({ date: newDate }, abortController.signal);
-//         const reservationsToDisplay = reservationsFromAPI.filter((item)=> item.status !== "finished");
-//         setReservations(reservationsToDisplay);
-//       } catch(error){
-//         if (error){
-//           setReservationsError(error)
-//         }
-//       }
-//       return () => abortController.abort();
-//       }
+  useEffect(()=>{
+   async function loadDashboard() {
+      const abortController = new AbortController();
+      try{
+        const reservationsFromAPI = await listReservations({ date: newDate }, abortController.signal);
+        const reservationsToDisplay = reservationsFromAPI.filter((item)=> item.status !== "finished");
+        setReservations(reservationsToDisplay);
+      } catch(error){
+        if (error){
+          setReservationsError(error)
+        }
+      }
+      return () => abortController.abort();
+      }
 
-// loadDashboard();
-//   }, [newDate]);
+loadDashboard();
+  }, []);
 
 
   return (
@@ -57,9 +57,9 @@ const newDate = useQuery().get("date") ?? date;
         </button></Link>
         </div>
       
-      {/* <ErrorAlert error={reservationsError} /> */}
+      <ErrorAlert error={reservationsError} />
       {/* {JSON.stringify(reservations)} */}
-      <ReservationsList newDate={newDate} />
+      <ReservationsList reservations={reservations} />
       <TablesList />
     </main>
   );
