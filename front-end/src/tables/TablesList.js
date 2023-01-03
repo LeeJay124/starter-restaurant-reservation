@@ -40,9 +40,10 @@ function TablesList() {
         await finishTable(table_id, abortController.signal);
 
         const updatedTables = await listTables(abortController.signal);
-                 history.push(`/dashboard?date=${dashboardDate}`);
 
 setTables(updatedTables);
+history.push(`/dashboard?date=${dashboardDate}`);
+
       }
     catch (error) {
         if (error) {
