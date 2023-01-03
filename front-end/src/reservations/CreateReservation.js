@@ -39,16 +39,20 @@ const [reservationsError, setReservationsError] = useState(null);
 
 
   const handleReservationCreate = async (reservation) => {
-      //validateFutureDate(reservationFormData);
-      //validateNotTuesday(reservationFormData);
-      //console.log(formErrors)
-      //if(formErrors.length === 0){
-      //const result = window.confirm("Create this reservation?");
+    const reservationFormatted={
+      "first_name":reservation.first_name, 
+        "last_name":reservation.last_name,
+        "mobile_number":reservation.mobile_number, 
+        "reservation_date": reservation.reservation_date, 
+        "reservation_time": reservation.reservation_time, 
+        "people": Number(reservation.people), 
+        "status": reservation.status
+  }
       
 
         const abortController = new AbortController();
 try{
-  const newReservation = await createReservation(reservation, abortController.signal);
+  const newReservation = await createReservation(reservationFormatted, abortController.signal);
   const date = new Date(newReservation.reservation_date);
   const dashboardDate = date.toISOString().split('T')[0];
   history.push(`/dashboard?date=${dashboardDate}`);
@@ -70,7 +74,7 @@ try{
         mobile_number:``, 
         reservation_date: ``, 
         reservation_time: ``, 
-        people: ``, 
+        people: 0, 
         status: `booked`
       };
       const [reservationFormData, setReservationFormData]=useState({...initialReservationFormData});

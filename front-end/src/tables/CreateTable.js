@@ -9,15 +9,18 @@ function CreateTable() {
     const initialTableFormData = {
 
         table_name: ``,
-        capacity: ``,
+        capacity: 0,
     };
     const [tableFormData, setTableFormData] = useState({ ...initialTableFormData });
 
     const handleTableCreate = async (table) => {
-
+const tableFormatted={
+    "table_name": table.table_name,
+    "capacity": Number(table.capacity)
+}
         const abortController = new AbortController();
         try {
-            await createTable(table, abortController.signal);
+            await createTable(tableFormatted, abortController.signal);
 
             history.push(`/dashboard`);
         }
