@@ -39,7 +39,7 @@ const newDate = useQuery().get("date") ?? date;
       }
 
 loadDashboard();
-  }, []);
+  }, [newDate]);
 
 
   return (
