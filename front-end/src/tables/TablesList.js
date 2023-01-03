@@ -4,7 +4,7 @@ import { finishTable, listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 // import { listTables } from "../utils/api";
 import { useHistory } from "react-router-dom";
-import { today } from "../utils/date-time";
+// import { today } from "../utils/date-time";
 function TablesList() {
   const history = useHistory();
 
@@ -28,29 +28,29 @@ function TablesList() {
     loadTables();
   }, []);
 
-  const finishTableHandler = async (table_id, reservation_id) => {
+  const finishTableHandler = async (table_id) => {
     const result = window.confirm("Is this table ready to seat new guests? This cannot be undone.");
     if (result) {
       const abortController = new AbortController();
-      const dashboardDate = today();
+      // const dashboardDate = today();
       // const status = "finished";
 
     try {
       // await updateReservationStatus(reservation_id, status, abortController.signal);
         await finishTable(table_id, abortController.signal);
 
-        const updatedTables = await listTables(abortController.signal);
+        // const updatedTables = await listTables(abortController.signal);
 
-setTables(updatedTables);
-history.push(`/dashboard?date=${dashboardDate}`);
+// setTables(updatedTables);
+history.go();
 
       }
     catch (error) {
-        if (error) {
+        // if (error) {
             setTablesError(error);
         }
-    }
-    return () => abortController.abort();
+    // }
+    // return () => abortController.abort();
     } 
     
 };

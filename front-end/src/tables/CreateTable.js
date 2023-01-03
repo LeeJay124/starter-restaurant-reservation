@@ -22,7 +22,7 @@ const tableFormatted={
         try {
             await createTable(tableFormatted, abortController.signal);
 
-            history.push(`/dashboard`);
+            history.go();
         }
         catch (error) {
             if (error) {
