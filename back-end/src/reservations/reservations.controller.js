@@ -136,8 +136,8 @@ function hasValidStatus(req, res, next){
 //Check to see if people is valid
 function hasValidPeople(req, res,next){
   const {data:{people} = {}} = req.body;
-  const peopleAsNumber = people;
-  if (typeof people != 'number') {
+  const peopleAsNumber = Number(people);
+  if (!Number.isInteger(people)) {
     return next({
     status: 400, 
     message: `people must be a number`
