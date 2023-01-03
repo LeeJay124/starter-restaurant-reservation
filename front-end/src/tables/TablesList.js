@@ -33,10 +33,10 @@ function TablesList({tables}) {
     if (result) {
       const abortController = new AbortController();
       const dashboardDate = today();
-      const status = "finished";
+      // const status = "finished";
 
     try {
-      await updateReservationStatus(reservation_id, status, abortController.signal);
+      // await updateReservationStatus(reservation_id, status, abortController.signal);
         await finishTable(table_id, abortController.signal);
 
         history.push(`/dashboard?date=${dashboardDate}`);
