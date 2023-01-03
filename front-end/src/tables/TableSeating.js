@@ -37,7 +37,7 @@ function TableSeating() {
                 const results = [];
                 tablesFromAPI.forEach((table) => {
                     results.push({
-                        key: `${table.table_name}-${table.capacity}`,
+                        key: `${table.table_name} - ${table.capacity}`,
                         value: table.table_id
                     });
                 });

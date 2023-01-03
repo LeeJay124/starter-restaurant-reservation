@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import ErrorAlert from "../layout/ErrorAlert";
+import React from "react";
+// import ErrorAlert from "../layout/ErrorAlert";
 import ReservationsList from "../reservations/ReservationsList";
 import {next, previous, today} from "../utils/date-time";
 import useQuery from "../utils/useQuery";
 import { Link } from "react-router-dom";
-import { listReservations, listTables } from "../utils/api";
+// import { listReservations } from "../utils/api";
 import TablesList from "../tables/TablesList"
 // import LoadTables from "../Comps/LoadTables";
 // import { Col, Row, Container, Button } from "react-bootstrap";
@@ -18,46 +18,29 @@ import TablesList from "../tables/TablesList"
  * @returns {JSX.Element}
  */
 function Dashboard({date}) {
-  const [reservations, setReservations] = useState([]);
-  const [reservationsError, setReservationsError] = useState(null);
-  const [tables, setTables] = useState([]);
-  const [tablesError, setTablesError] = useState(null);
+  // const [reservations, setReservations] = useState([]);
+  // const [reservationsError, setReservationsError] = useState(null);
 
-// const history = useHistory();
 const newDate = useQuery().get("date") ?? date;
 
-  useEffect(()=>{
-   async function loadDashboard() {
-      const abortController = new AbortController();
-      try{
-        const reservationsFromAPI = await listReservations({ date: newDate }, abortController.signal);
-        const reservationsToDisplay = reservationsFromAPI.filter((item)=> item.status !== "finished");
-        setReservations(reservationsToDisplay);
-      } catch(error){
-        if (error){
-          setReservationsError(error)
-        }
-      }
-      return () => abortController.abort();
-      }
-      
-      async function loadTables() {
-        const abortController = new AbortController();
-        try {
-          const tablesFromAPI = await listTables(abortController.signal);
-          setTables(tablesFromAPI);
-        } catch (error) {
-          if (error) {
-            setTablesError(error)
-          }
-        }
-        return () => abortController.abort();
-      }
-  
-      loadTables();
+//   useEffect(()=>{
+//    async function loadDashboard() {
+//       const abortController = new AbortController();
+//       try{
+//         const reservationsFromAPI = await listReservations({ date: newDate }, abortController.signal);
+//         const reservationsToDisplay = reservationsFromAPI.filter((item)=> item.status !== "finished");
+//         setReservations(reservationsToDisplay);
+//       } catch(error){
+//         if (error){
+//           setReservationsError(error)
+//         }
+//       }
+//       return () => abortController.abort();
+//       }
 
-loadDashboard();
-  }, [newDate]);
+// loadDashboard();
+//   }, [newDate]);
+
 
   return (
     <main>
@@ -74,11 +57,10 @@ loadDashboard();
         </button></Link>
         </div>
       
-      <ErrorAlert error={reservationsError} />
+      {/* <ErrorAlert error={reservationsError} /> */}
       {/* {JSON.stringify(reservations)} */}
-      <ReservationsList reservations={reservations} />
-      <ErrorAlert error={tablesError} />
-      <TablesList tables={tables}/>
+      <ReservationsList newDate={newDate} />
+      <TablesList />
     </main>
   );
 }
