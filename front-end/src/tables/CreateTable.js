@@ -51,7 +51,7 @@ const tableFormatted={
         if (table.capacity < 1) {
             errors.capacity= 'Form: Capacity must be at least 1';
         }
-        if (table.table_name.lenth < 2) {
+        if (table.table_name.length < 2) {
             errors.table='Form: Table name must be at least 2 characters';
         }
         return errors;

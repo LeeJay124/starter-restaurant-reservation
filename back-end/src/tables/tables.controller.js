@@ -14,7 +14,6 @@ const hasRequiredProperties = hasProperties(
 const VALID_PROPERTIES = [
     "table_name",
     "capacity",
-  "status",
   "reservation_id"
 ];
 const hasSeatRequiredProperties = hasProperties(
@@ -72,28 +71,35 @@ function hasOnlyValidProperties(req, res, next) {
     }
     next();
 }
-
+function hasData(req, res, next) {
+  const { data } = req.body;
+  if (!data) {
+    return next({
+      status: 400,
+      message: "data is missing",
+    });
+  }
+  next();
+}
 //Check the capacity and table occupancy
 async function validSeating(req, res, next) {
   const { data :{reservation_id}= {}} = req.body;
-  const {tableId} = req.params;
-  const table = await service.read(tableId);
-  const reservation = await reservationService.read(reservation_id);
-  const tableCapacity = Number(table.capacity); 
-  const peopleAsNumber = Number(reservation.people);
-  if (peopleAsNumber >tableCapacity) {
+  const tableCapacity = Number(res.locals.table.capacity); 
+  const peopleAsNumber = Number(res.locals.reservation.people);
+  if (res.locals.table.reservation_id !=null) {
+    return next({
+        status: 400,
+        message: "occupied",
+      });
+}
+  if (peopleAsNumber > tableCapacity) {
       return next({
           status: 400,
           message: "capacity insufficient for this table",
         });
   }
-  if (table.status === "occupied") {
-      return next({
-          status: 400,
-          message: "table is already occupied",
-        });
-  }
-  if (reservation.status === "seated") {
+
+  if (res.locals.reservation.status === "seated") {
     return next({
         status: 400,
         message: "reservation already seated",
@@ -116,17 +122,28 @@ async function reservationExists(req, res,next){
 
 //Check table occupancy
 async function validOccupied(req, res, next) {
-  const {tableId} = req.params;
-  const table = await service.read(tableId);
-  if (table.status === "free") {
+  const {reservation_id} = res.locals.table;
+  if (reservation_id ==null) {
       return next({
-          status: 400,
-          message: "Table is not occupied",
-        });
+        status: 400,
+        message: "Table is not occupied",
+      });
   }
- 
   next();
 }
+//Check table occupancy
+async function validNotOccupied(req, res, next) {
+  const {reservation_id} = res.locals.table;
+  console.log(res.locals.table)
+  if (!reservation_id) {
+      return next({
+        status: 400,
+        message: "occupied",
+      });
+  }
+  next();
+}
+
 
   //Create tables
 async function create (req, res){
@@ -138,10 +155,8 @@ async function create (req, res){
 async function update(req, res) {
   const {data: {reservation_id}} = req.body;
   const {tableId} = req.params;
-  const status = "occupied";
   const reservationStatus = "seated";
-  await reservationService.statusUpdate(reservation_id, reservationStatus);
-  const data = await service.update(tableId, reservation_id, status);  
+  const data = await service.update(tableId, reservation_id, reservationStatus);  
   res.status(200).json({ data });
   }
 
@@ -160,12 +175,9 @@ async function tableExists(req, res,next){
 //Finish existing table and set reservation status to finished
 async function remove(req, res) {
   const {tableId} = req.params;
-  const status = "free";
-  const reservation_id = null;
   const reservationStatus = "finished";
   const reservationId = res.locals.table.reservation_id;
-  // await reservationService.statusUpdate(reservationId, reservationStatus);
-  const data = await service.remove(tableId, reservation_id, status);  
+  const data = await service.remove(tableId, reservationId, reservationStatus);  
   res.status(200).json({ data });
   }
 
@@ -179,8 +191,8 @@ validTable,
 asyncErrorBoundary(create)
 ], 
 update: [
+  hasData,
   hasSeatRequiredProperties,
-  hasOnlyValidProperties,
   reservationExists,
   tableExists,
   validSeating,
