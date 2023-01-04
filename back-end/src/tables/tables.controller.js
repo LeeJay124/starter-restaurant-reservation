@@ -86,12 +86,6 @@ async function validSeating(req, res, next) {
   const { data :{reservation_id}= {}} = req.body;
   const tableCapacity = Number(res.locals.table.capacity); 
   const peopleAsNumber = Number(res.locals.reservation.people);
-//   if (res.locals.table.reservation_id) {
-//     return next({
-//         status: 400,
-//         message: "occupied",
-//       });
-// }
   if (peopleAsNumber > tableCapacity) {
       return next({
           status: 400,
