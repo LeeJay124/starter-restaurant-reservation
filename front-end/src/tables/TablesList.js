@@ -39,9 +39,9 @@ function TablesList() {
       // await updateReservationStatus(reservation_id, status, abortController.signal);
         await finishTable(table_id, abortController.signal);
 
-        // const updatedTables = await listTables(abortController.signal);
+        const updatedTables = await listTables(abortController.signal);
 
-// setTables(updatedTables);
+setTables(updatedTables);
 history.go();
 
       }
