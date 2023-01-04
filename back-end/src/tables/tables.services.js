@@ -31,28 +31,27 @@ function create(table) {
 
 //Knex query to add reservation id to table
 function update(tableId, reservationId, status){
+    return knex("reservations")
+    .where({ reservation_id: reservationId })
+    .update({ status: status })
+    .returning("*")
+    .then(() => {
     return knex("tables")
-    .select("*")
-    .where({table_id: tableId})
-    .update({reservation_id: reservationId, status: status}, ["*"])
-    .then((data)=> data[0]);
+    .where({ table_id: tableId })
+    .update({ reservation_id: null })
+    .returning("*")
+    });
 }
 
 //Knex query to remove reservation id from table
 function remove(tableId, reservationId, status){
-//     return knex("tables")
-//     .select("*")
-//     .where({table_id: tableId})
-//     .update({reservation_id: reservationId, status: status}, ["*"])
-//     .then((data)=> data[0]);
-// }
 return knex("reservations")
-.where({ reservationId })
+.where({ reservation_id: reservationId })
 .update({ status: status })
 .returning("*")
 .then(() => {
 return knex("tables")
-.where({ tableId })
+.where({  table_id: tableId })
 .update({ reservation_id: null })
 .returning("*")
 });
