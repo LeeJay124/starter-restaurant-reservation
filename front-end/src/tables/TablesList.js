@@ -46,7 +46,7 @@ history.go();
 
       }
     catch (error) {
-        // if (error) {
+        // if (error) 
             setTablesError(error);
         }
     // }

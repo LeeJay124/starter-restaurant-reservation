@@ -8,8 +8,7 @@ function Table({table, finishTable}){
             <td>{table.table_name}</td>
             <td>{table.capacity}</td>
             <td data-table-id-status={`${table.table_id}`}>{table.status}</td>   
-            <td>{table.status === "occupied" ? <button onClick={() => finishTable(table.table_id, table.reservation_id)}className="btn btn-primary" data-table-id-finish={`${table.table_id}`}>Finish</button> : ""}</td>
-        </tr>
+            <td>{table.reservation_id && <button className="btn btn-primary" data-table-id-finish={`${table.table_id}`} onClick={() => finishTable(table.table_id)}>Finish</button>}</td></tr>
     </>
     )
 }
