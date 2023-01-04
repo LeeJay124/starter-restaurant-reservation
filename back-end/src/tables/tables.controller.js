@@ -164,7 +164,7 @@ async function remove(req, res) {
   const reservation_id = null;
   const reservationStatus = "finished";
   const reservationId = res.locals.table.reservation_id;
-  await reservationService.statusUpdate(reservationId, reservationStatus);
+  // await reservationService.statusUpdate(reservationId, reservationStatus);
   const data = await service.remove(tableId, reservation_id, status);  
   res.status(200).json({ data });
   }

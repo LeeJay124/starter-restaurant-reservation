@@ -228,7 +228,6 @@ export async function finishTable(tableId, signal) {
   const url = `${API_BASE_URL}/tables/${tableId}/seat`;
   const options = {
     method: "DELETE",
-    headers,
     signal,
   };
   return await fetchJson(url, options, {});
