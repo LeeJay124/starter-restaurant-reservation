@@ -124,12 +124,12 @@ async function reservationExists(req, res,next){
 async function validOccupied(req, res, next) {
   const {reservation_id} = res.locals.table;
   if (reservation_id ==null) {
-      return next();
+      return next({
+        status: 400,
+        message: "Table is not occupied",
+      });
   }
-  next({
-    status: 400,
-    message: "Table is not occupied",
-  });
+  next();
 }
 //Check table occupancy
 async function validNotOccupied(req, res, next) {
