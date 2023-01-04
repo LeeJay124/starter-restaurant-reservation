@@ -30,32 +30,23 @@ function create(table) {
   }
 
 //Knex query to add reservation id to table
-function update(tableId, reservationId, status){
-    return knex("reservations")
-    .where({ reservation_id: reservationId })
-    .update({ status: status })
-    .returning("*")
-    .then(() => {
+function update(tableId, reservationId){
     return knex("tables")
-    .where({ table_id: tableId })
-    .update({ reservation_id: null })
-    .returning("*")
-    });
+    .select("*")
+    .where({table_id: tableId})
+    .update({reservation_id: reservationId}, ["*"])
+    .then((data)=> data[0]);
 }
 
 //Knex query to remove reservation id from table
-function remove(tableId, reservationId, status){
-return knex("reservations")
-.where({ reservation_id: reservationId })
-.update({ status: status })
-.returning("*")
-.then(() => {
-return knex("tables")
-.where({  table_id: tableId })
-.update({ reservation_id: null })
-.returning("*")
-});
+function remove(tableId, reservationId){
+    return knex("tables")
+    .select("*")
+    .where({table_id: tableId})
+    .update({reservation_id: reservationId}, ["*"])
+    .then((data)=> data[0]);
 }
+
 module.exports = {
     list, read, create, update, remove
 }

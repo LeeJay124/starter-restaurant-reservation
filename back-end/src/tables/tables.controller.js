@@ -86,12 +86,12 @@ async function validSeating(req, res, next) {
   const { data :{reservation_id}= {}} = req.body;
   const tableCapacity = Number(res.locals.table.capacity); 
   const peopleAsNumber = Number(res.locals.reservation.people);
-  if (res.locals.table.reservation_id !=null) {
-    return next({
-        status: 400,
-        message: "occupied",
-      });
-}
+//   if (res.locals.table.reservation_id) {
+//     return next({
+//         status: 400,
+//         message: "occupied",
+//       });
+// }
   if (peopleAsNumber > tableCapacity) {
       return next({
           status: 400,
@@ -121,7 +121,7 @@ async function reservationExists(req, res,next){
 }
 
 //Check table occupancy
-async function validOccupied(req, res, next) {
+async function validNotOccupied(req, res, next) {
   const {reservation_id} = res.locals.table;
   if (reservation_id ==null) {
       return next({
@@ -132,10 +132,9 @@ async function validOccupied(req, res, next) {
   next();
 }
 //Check table occupancy
-async function validNotOccupied(req, res, next) {
+async function validOccupied(req, res, next) {
   const {reservation_id} = res.locals.table;
-  console.log(res.locals.table)
-  if (!reservation_id) {
+  if (reservation_id) {
       return next({
         status: 400,
         message: "occupied",
@@ -156,7 +155,8 @@ async function update(req, res) {
   const {data: {reservation_id}} = req.body;
   const {tableId} = req.params;
   const reservationStatus = "seated";
-  const data = await service.update(tableId, reservation_id, reservationStatus);  
+  await reservationService.statusUpdate(reservation_id, reservationStatus);
+  const data = await service.update(tableId, reservation_id);  
   res.status(200).json({ data });
   }
 
@@ -176,8 +176,10 @@ async function tableExists(req, res,next){
 async function remove(req, res) {
   const {tableId} = req.params;
   const reservationStatus = "finished";
+  const reservation_id = null;
   const reservationId = res.locals.table.reservation_id;
-  const data = await service.remove(tableId, reservationId, reservationStatus);  
+  await reservationService.statusUpdate(reservationId, reservationStatus);
+  const data = await service.remove(tableId, reservation_id);  
   res.status(200).json({ data });
   }
 
@@ -195,12 +197,13 @@ update: [
   hasSeatRequiredProperties,
   reservationExists,
   tableExists,
+  validOccupied,
   validSeating,
   asyncErrorBoundary(update)
 ], 
 remove: [
   tableExists,
-  validOccupied, 
+  validNotOccupied, 
   asyncErrorBoundary(remove)
 ]
 }
