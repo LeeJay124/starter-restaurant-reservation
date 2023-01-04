@@ -22,8 +22,8 @@ function ReservationsList({reservations}) {
         if (result) {
           try{
             const status = "cancelled";
-            await updateReservationStatus(reservationId, status, abortController.signal);
-            history.go();
+            const updatedReservation = await updateReservationStatus(reservationId, status, abortController.signal);
+            history.push(`/dashboard?date=${updatedReservation.reservationDate}`);
         }
         catch (error) {
           if (error) {
