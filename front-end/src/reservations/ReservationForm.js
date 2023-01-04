@@ -10,11 +10,7 @@ const rTime = reservation.reservation_time;
   const d = new Date(`${rDate}T${rTime}`);
   const errors = {};
   const tooday = new Date();
-//   const toodayToLocaleString = tooday.toLocaleDateString();
-//   const dateToLocaleString = d.toLocaleDateString();
   let day = d.getDay();
-//   let t = d.toLocaleTimeString();
-// let now = tooday.toLocaleTimeString();
 
 if(d.getTime() < tooday.getTime()){
         errors.past='Form: Reservation occurs in the past';
@@ -37,8 +33,6 @@ const formValidation = (event)=>{
        const dateErrors = validDate(reservationFormData);
        // Clear all previous errors
   const errorElements = document.querySelectorAll(".errors");
-//   errorElements.classList.remove("alert");
-//   errorElements.classList.remove("alert-danger");
 
   for (let element of errorElements) {
     element.style.display = "none";

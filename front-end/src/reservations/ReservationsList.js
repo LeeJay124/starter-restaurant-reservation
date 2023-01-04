@@ -12,7 +12,6 @@ import ErrorAlert from "../layout/ErrorAlert";
  */
 function ReservationsList({reservations}) {
   const history = useHistory();
-    // const {url} = useRouteMatch();
     const [reservationError, setReservationError] = useState(null);
 
     const handleReservationCancel = async (reservationId) => {
@@ -23,12 +22,10 @@ function ReservationsList({reservations}) {
           try{
             const status = "cancelled";
             const updatedReservation = await updateReservationStatus(reservationId, status, abortController.signal);
-            history.push(`/dashboard?date=${updatedReservation.reservationDate}`);
+            history.push(`/dashboard?date=${updatedReservation.reservation_date}`);
         }
         catch (error) {
-          if (error) {
               setReservationError(error);
-          }
       }
 
       return () => abortController.abort();

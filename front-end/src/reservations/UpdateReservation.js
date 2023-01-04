@@ -2,15 +2,12 @@ import React, {useState, useEffect} from "react";
 import { readReservation, updateReservation } from "../utils/api";
 import {useHistory, useParams} from "react-router-dom";
 import ReservationForm from "./ReservationForm";
-// import formatReservationDate from "../utils/format-reservation-date";
 import ErrorAlert from "../layout/ErrorAlert";
-// import formatRservationTime from "../utils/format-reservation-time";
 
 function UpdateReservation (){
   const {reservationId} = useParams();
     const history = useHistory();
    const [reservationError, setReservationError] = useState(null);
-    //const [reservation, setReservation] = useState({});
    
     const initialReservationFormData = {
          
@@ -25,8 +22,6 @@ function UpdateReservation (){
         const abortController = new AbortController();
     
         readReservation(reservationId, abortController.signal).then((data)=>{
-          // const timeUpdatedData = formatRservationTime(data)
-          // const updatedData = formatReservationDate(timeUpdatedData);
           
           setReservationFormData({
             first_name:`${data.first_name}`, 
@@ -48,17 +43,22 @@ function UpdateReservation (){
         });   
       };
       const handleReservationUpdate = async (reservation) => {
+        const reservationFormatted={
+          "first_name":reservation.first_name, 
+            "last_name":reservation.last_name,
+            "mobile_number":reservation.mobile_number, 
+            "reservation_date": reservation.reservation_date, 
+            "reservation_time": reservation.reservation_time, 
+            "people": Number(reservation.people), 
+      }
         const abortController = new AbortController();
           try{
-             await updateReservation(reservationId, reservation, abortController.signal);
+             await updateReservation(reservationId, reservationFormatted, abortController.signal);
           
               history.goBack();
         } catch(error){
-          if(error){
             setReservationError(error);
-          }
         }
-        return () => abortController.abort();
       };
       const handleReservationSubmit = (event)=>{
         event.preventDefault();

@@ -25,12 +25,9 @@ const tableFormatted={
             history.push("/dashboard");
         }
         catch (error) {
-            if (error) {
                 setTablesErrors(error);
-            }
         }
 
-        //} 
         return () => abortController.abort();
     };
 
@@ -62,8 +59,6 @@ const tableFormatted={
         const capacityError = validCapacity(tableFormData);
               // Clear all previous errors
   const errorElements = document.querySelectorAll(".errors");
-  //   errorElements.classList.remove("alert");
-  //   errorElements.classList.remove("alert-danger");
   
     for (let element of errorElements) {
       element.style.display = "none";

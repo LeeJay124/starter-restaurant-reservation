@@ -9,7 +9,6 @@ function TableSeating() {
     const { reservationId } = useParams();
     const [reservation, setReservation] = useState([]);
     const [reservationError, setReservationError] = useState(null);
-    // const [formErrors, setFormErrors] = useState(null);
     const [options, setOptions] = useState([]);
     const history = useHistory();
     
@@ -71,7 +70,6 @@ const reservationDate = reservation.reservation_date;
             }
         }
 
-        //} 
         return () => abortController.abort();
     };
 
@@ -103,8 +101,6 @@ const reservationDate = reservation.reservation_date;
         const capacityError = validCapacity(seatTableFormData);
                      // Clear all previous errors
   const errorElements = document.querySelectorAll(".errors");
-  //   errorElements.classList.remove("alert");
-  //   errorElements.classList.remove("alert-danger");
   
     for (let element of errorElements) {
       element.style.display = "none";

@@ -6,10 +6,6 @@ import useQuery from "../utils/useQuery";
 import { Link } from "react-router-dom";
 import { listReservations } from "../utils/api";
 import TablesList from "../tables/TablesList"
-// import LoadTables from "../Comps/LoadTables";
-// import { Col, Row, Container, Button } from "react-bootstrap";
-// import Table from "react-bootstrap/Table";
-// import "./Dashboard.css";
 
 /**
  * Defines the dashboard page.
@@ -28,7 +24,7 @@ const newDate = useQuery().get("date") ?? date;
       const abortController = new AbortController();
       try{
         const reservationsFromAPI = await listReservations({ date: newDate }, abortController.signal);
-        const reservationsToDisplay = reservationsFromAPI.filter((item)=> item.status !== "finished");
+        const reservationsToDisplay = reservationsFromAPI.filter((item)=> item.status !== "cancelled");
         setReservations(reservationsToDisplay);
       } catch(error){
         if (error){
@@ -58,7 +54,6 @@ loadDashboard();
         </div>
       
       <ErrorAlert error={reservationsError} />
-      {/* {JSON.stringify(reservations)} */}
       <ReservationsList reservations={reservations} />
       <TablesList />
     </main>

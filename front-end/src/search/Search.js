@@ -24,12 +24,9 @@ function Search(){
         setSearchPerformed(true);
     }
     catch (error) {
-        if (error) {
           setReservationsError(error);
-        }
     }
 
-    //} 
     return () => abortController.abort();
 };
   
