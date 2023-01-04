@@ -10,11 +10,7 @@ const rTime = reservation.reservation_time;
   const d = new Date(`${rDate}T${rTime}`);
   const errors = {};
   const tooday = new Date();
-//   const toodayToLocaleString = tooday.toLocaleDateString();
-//   const dateToLocaleString = d.toLocaleDateString();
   let day = d.getDay();
-//   let t = d.toLocaleTimeString();
-// let now = tooday.toLocaleTimeString();
 
 if(d.getTime() < tooday.getTime()){
         errors.past='Form: Reservation occurs in the past';
@@ -37,8 +33,6 @@ const formValidation = (event)=>{
        const dateErrors = validDate(reservationFormData);
        // Clear all previous errors
   const errorElements = document.querySelectorAll(".errors");
-//   errorElements.classList.remove("alert");
-//   errorElements.classList.remove("alert-danger");
 
   for (let element of errorElements) {
     element.style.display = "none";
@@ -66,64 +60,55 @@ else{
          <div className="m-2 errors"></div>
 
         <form name="Reservations" onSubmit={formValidation}>
-        <table className="table table-bordered table-condensed table-striped">
+        <table className="table table-bordered table-condensed">
           <tbody>
-          <tr><th colSpan={"3"}>Add/Edit a Reservation</th></tr>
+          <tr className="table-dark text-dark"><th colSpan={"3"}>Add/Edit a Reservation</th></tr>
             <tr>
-                <td><label htmlFor="first_name">First Name</label></td>
-                <td><label htmlFor="last_name">Last Name</label></td>
-                <td><label htmlFor="mobile_number">Mobile Number</label></td>
-            </tr>
-            <tr>
-                <td><input name="first_name"
+                <td><label htmlFor="first_name">First Name</label><input name="first_name"
                     id="first_name"
                     placeholder="First Name"
                     type="text"
                     onChange={handleReservationChange}
-                    value={reservationFormData.first_name} required/>
-                    </td>
-                <td><input name="last_name"
+                    value={reservationFormData.first_name} required/></td></tr>
+                    <tr>
+                <td><label htmlFor="last_name">Last Name</label><input name="last_name"
                     id="last_name"
                     placeholder="Last Name"
                     type="text"
                     onChange={handleReservationChange}
-                    value={reservationFormData.last_name} required/>
-                    </td>
-                <td><input name="mobile_number"
+                    value={reservationFormData.last_name} required/></td></tr>
+                    <tr>
+                <td><label htmlFor="mobile_number">Mobile Number</label><input name="mobile_number"
                     id="mobile_number"
                     placeholder="Mobile Number"
                     type="text"
                     onChange={handleReservationChange}
-                    value={reservationFormData.mobile_number} required/>
-                    </td>
-                    </tr>
+                    value={reservationFormData.mobile_number} required/></td>
+            </tr>
+           
            <tr>
-                <td><label htmlFor="reservation_date">Date of Reservation</label></td>
-                <td> <label htmlFor="reservation_time">Time of Reservation</label></td>
-                <td><label htmlFor="people"># of People</label></td>
-                </tr>
-          <tr>
-                <td><input name="reservation_date"
+                <td><label htmlFor="reservation_date">Date of Reservation</label><input name="reservation_date"
                     id="reservation_date"
                     placeholder="Reservation Date"
                     type="date"
                     onChange={handleReservationChange}
-                    value={reservationFormData.reservation_date} required/>
-                    </td>
-                <td><input name="reservation_time"
+                    value={reservationFormData.reservation_date} required/></td></tr>
+                    <tr>
+                <td> <label htmlFor="reservation_time">Time of Reservation</label><input name="reservation_time"
                     id="reservation_time"
                     placeholder="Reservation Time"
                     type="time"
                     onChange={handleReservationChange}
-                    value={reservationFormData.reservation_time} required/>
-                    </td>
-                <td><input name="people"
+                    value={reservationFormData.reservation_time} required/></td></tr>
+                    <tr>
+                <td><label htmlFor="people"># of People</label><input name="people"
                     id="people"
                     placeholder="# of People"
                     type="number"
                     onChange={handleReservationChange}
-                    value={reservationFormData.people} required/>
-                    </td></tr>
+                    value={reservationFormData.people} required/></td>
+                </tr>
+         
                     <tr><td>
                     <button type="submit" className="btn btn-primary mr-3">Submit</button>
                     <button  type="button" onClick={()=> history.goBack()} className="btn btn-danger">Cancel</button>

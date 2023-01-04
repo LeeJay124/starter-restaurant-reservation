@@ -2,15 +2,13 @@ import React, {useState, useEffect} from "react";
 import { readReservation, updateReservation } from "../utils/api";
 import {useHistory, useParams} from "react-router-dom";
 import ReservationForm from "./ReservationForm";
-// import formatReservationDate from "../utils/format-reservation-date";
 import ErrorAlert from "../layout/ErrorAlert";
-// import formatRservationTime from "../utils/format-reservation-time";
+import { formatAsDate, formatAsTime } from "../utils/date-time";
 
 function UpdateReservation (){
   const {reservationId} = useParams();
     const history = useHistory();
    const [reservationError, setReservationError] = useState(null);
-    //const [reservation, setReservation] = useState({});
    
     const initialReservationFormData = {
          
@@ -25,15 +23,14 @@ function UpdateReservation (){
         const abortController = new AbortController();
     
         readReservation(reservationId, abortController.signal).then((data)=>{
-          // const timeUpdatedData = formatRservationTime(data)
-          // const updatedData = formatReservationDate(timeUpdatedData);
-          
+          const formattedTime = formatAsTime(data.reservation_time);
+
           setReservationFormData({
             first_name:`${data.first_name}`, 
             last_name:`${data.last_name}`,
             mobile_number:`${data.mobile_number}`, 
             reservation_date: `${data.reservation_date}`, 
-            reservation_time: `${data.reservation_time}`, 
+            reservation_time: formattedTime, 
             people: `${data.people}`,
           });});
     
@@ -48,17 +45,22 @@ function UpdateReservation (){
         });   
       };
       const handleReservationUpdate = async (reservation) => {
+        const reservationFormatted={
+          "first_name":reservation.first_name, 
+            "last_name":reservation.last_name,
+            "mobile_number":reservation.mobile_number, 
+            "reservation_date": reservation.reservation_date, 
+            "reservation_time": reservation.reservation_time, 
+            "people": Number(reservation.people), 
+      }
         const abortController = new AbortController();
           try{
-             await updateReservation(reservationId, reservation, abortController.signal);
-          
-              history.goBack();
+            const updatedRes = await updateReservation(reservationId, reservationFormatted, abortController.signal);
+          const resDate = formatAsDate(updatedRes.reservation_date);
+              history.push(`/dashboard?date=${resDate}`);
         } catch(error){
-          if(error){
             setReservationError(error);
-          }
         }
-        return () => abortController.abort();
       };
       const handleReservationSubmit = (event)=>{
         event.preventDefault();

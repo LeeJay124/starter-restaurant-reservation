@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import ReservationsList from "../reservations/ReservationsList";
 import { reservationSearch } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
+import "./Search.css";
 
 function Search(){
 
@@ -24,12 +25,9 @@ function Search(){
         setSearchPerformed(true);
     }
     catch (error) {
-        if (error) {
           setReservationsError(error);
-        }
     }
 
-    //} 
     return () => abortController.abort();
 };
   
@@ -47,18 +45,19 @@ const handleSearchChange = ({ target }) => {
             }
       <div className="d-md-flex mb-3 pt-3">
       <form name="Tables" onSubmit={handleSearch}>
-                <table className="table table-bordered table-condensed table-striped">
+                <table className="table table-bordered table-condensed">
 <tbody>
-<tr><th>Search for a Reservation</th></tr>
+<tr className="table-dark text-dark"><th>Search for a Reservation</th></tr>
 <tr>
-<td>
+<td><div className="flexFields"><div>
         <input name="mobile_number"
               type="text"
               size="30"
               placeholder="Enter a customer's phone number"
               onChange={handleSearchChange} 
-              value={searchFormData.mobile_number} required/>
-              <button type="submit"  className="btn btn-primary m-3">Find</button>
+              value={searchFormData.mobile_number} required/></div>
+              <div>
+              <button type="submit"  className="btn btn-primary ml-3">Find</button></div></div>
               </td>
               </tr>
                     </tbody>
@@ -68,9 +67,9 @@ const handleSearchChange = ({ target }) => {
      {searchPerformed ? <div><div className="d-md-flex mb-3">
         <h4>Search Results</h4>
         </div>
-        <div className="d-md-flex mb-3">
+        
         {reservations.length > 0 ? <ReservationsList reservations={reservations} /> : <p>No reservations found.</p>}
-        </div></div> : ""} 
+        </div> : ""} 
 
     </main>
   );

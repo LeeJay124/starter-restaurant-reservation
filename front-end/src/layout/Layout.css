@@ -1,4 +1,17 @@
 .side-bar {
   background-color: #393a44;
-  min-width: 200px;
+  width: 100%;
+}
+@media all and (min-width: 400px){
+#accordionSidebar{
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-end;
+  margin-top: 8px;
+  margin-left: auto;
+  padding: auto;
+}
+.navbar-nav .nav-link{
+ padding-right:10px;
+}
 }
