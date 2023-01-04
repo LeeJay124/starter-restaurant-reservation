@@ -7,8 +7,13 @@ function Search(){
 
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
-  const [searchFormData, setSearchFormData] = useState({});
+  const initialSeachFormData = {
+    mobile_number:``, 
+  };
+  const [searchFormData, setSearchFormData] = useState({...initialSeachFormData});
   const [searchPerformed, setSearchPerformed] = useState(false);
+
+
 
   const handleSearch = async (event) => {
     event.preventDefault();

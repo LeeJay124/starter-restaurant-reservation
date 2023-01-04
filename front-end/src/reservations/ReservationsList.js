@@ -14,31 +14,6 @@ function ReservationsList({reservations}) {
   const history = useHistory();
     // const {url} = useRouteMatch();
     const [reservationError, setReservationError] = useState(null);
-  //   const [reservations, setReservations] = useState([]);
-
-  //   useEffect(()=>{
-  //     async function loadDashboard() {
-  //        const abortController = new AbortController();
-  //        try{
-  //          const reservationsFromAPI = await listReservations({ date: newDate }, abortController.signal);
-  //          const reservationsToDisplay = reservationsFromAPI.filter((item)=> item.status !== "finished");
-  //          setReservations(reservationsToDisplay);
-  //        } catch(error){
-  //          if (error){
-  //            setReservationError(error)
-  //          }
-  //        }
-  //        return () => abortController.abort();
-  //        }
-   
-  //  loadDashboard();
-  //    }, []);
-
-
-
-
-
-
 
     const handleReservationCancel = async (reservationId) => {
       const abortController = new AbortController();

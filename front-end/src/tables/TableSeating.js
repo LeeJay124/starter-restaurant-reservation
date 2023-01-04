@@ -58,14 +58,12 @@ function TableSeating() {
     }, [reservationId]);
 
     const handleTableSeating = async (table) => {
-        // const status = "seated";
-
+const reservationDate = reservation.reservation_date;
         const abortController = new AbortController();
         try {
-            // await updateReservationStatus(reservationId, status, abortController.signal);
             await updateTable(table.table_id, reservationId, abortController.signal);
 
-            history.push(`/dashboard`);
+            history.push(`/dashboard?date=${reservationDate}`);
         }
         catch (error) {
             if (error) {
