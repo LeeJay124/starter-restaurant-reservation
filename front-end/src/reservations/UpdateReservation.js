@@ -3,6 +3,7 @@ import { readReservation, updateReservation } from "../utils/api";
 import {useHistory, useParams} from "react-router-dom";
 import ReservationForm from "./ReservationForm";
 import ErrorAlert from "../layout/ErrorAlert";
+import { formatAsDate, formatAsTime } from "../utils/date-time";
 
 function UpdateReservation (){
   const {reservationId} = useParams();
@@ -22,13 +23,14 @@ function UpdateReservation (){
         const abortController = new AbortController();
     
         readReservation(reservationId, abortController.signal).then((data)=>{
-          
+          const formattedTime = formatAsTime(data.reservation_time);
+
           setReservationFormData({
             first_name:`${data.first_name}`, 
             last_name:`${data.last_name}`,
             mobile_number:`${data.mobile_number}`, 
             reservation_date: `${data.reservation_date}`, 
-            reservation_time: `${data.reservation_time}`, 
+            reservation_time: formattedTime, 
             people: `${data.people}`,
           });});
     
@@ -53,9 +55,9 @@ function UpdateReservation (){
       }
         const abortController = new AbortController();
           try{
-             await updateReservation(reservationId, reservationFormatted, abortController.signal);
-          
-              history.goBack();
+            const updatedRes = await updateReservation(reservationId, reservationFormatted, abortController.signal);
+          const resDate = formatAsDate(updatedRes.reservation_date);
+              history.push(`/dashboard?date=${resDate}`);
         } catch(error){
             setReservationError(error);
         }

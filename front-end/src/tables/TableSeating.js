@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { listTables, readReservation, updateTable } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
+import "./Tables.css";
+
 
 function TableSeating() {
     const [tables, setTables] = useState([]);
@@ -135,13 +137,15 @@ const reservationDate = reservation.reservation_date;
                 <ErrorAlert error={reservationError} />
             }
             <form name="TableSeating" onSubmit={formValidation}>
-                <table className="table table-bordered table-condensed table-striped">
+                <table className="table table-bordered table-condensed">
                     <tbody>
-                        <tr>
+                        <tr className="table-dark text-dark">
                             <th colSpan={"3"}>Seat a Reservation</th></tr>
                         <tr>
                             <td>
-                                <label htmlFor="table_id">Choose a table:</label>
+                                <div className="flexFields">
+                                    <div>
+                                {/* <label htmlFor="table_id">Choose a table:</label> */}
 
                                 <select name="table_id" id="table_id" onChange={handleTableSeatChange}>
                                     {options.map((option) => {
@@ -149,11 +153,10 @@ const reservationDate = reservation.reservation_date;
                                             <option key={option.value} value={option.value}>{option.key}</option>
                                         )
                                     })}
-                                </select>
-</td></tr><tr>
-                                <td><button type="submit" className="btn btn-primary mr-3">Submit</button>
-                                    <button type="button" onClick={() => history.goBack()} className="btn btn-danger">Cancel</button></td>
-                        </tr>
+                                </select></div><div><button type="submit" className="btn btn-primary mr-2 ml-2">Submit</button>
+                                    </div><div><button type="button" onClick={() => history.goBack()} className="btn btn-danger">Cancel</button></div></div>
+</td></tr>
+                    
                     </tbody>
                 </table>
             </form>

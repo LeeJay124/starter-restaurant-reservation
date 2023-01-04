@@ -3,6 +3,9 @@ import Table from "./Table";
 import { finishTable, listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { useHistory } from "react-router-dom";
+import "./Tables.css";
+
+
 function TablesList() {
   const history = useHistory();
 

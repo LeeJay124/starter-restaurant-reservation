@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ErrorAlert from "../layout/ErrorAlert";
 import { useHistory } from "react-router-dom";
 import { createTable } from "../utils/api";
+import "./Tables.css";
 
 function CreateTable() {
     const history = useHistory();
@@ -89,22 +90,21 @@ const tableFormatted={
                 <ErrorAlert error={tablesErrors} />
             }
             <form name="Tables" onSubmit={formValidation}>
-                <table className="table table-bordered table-condensed table-striped">
+                <table className="table table-bordered table-condensed">
                     <tbody>
+                        <tr className="table-dark text-dark">
+                            <th>Create a Table</th></tr>
                         <tr>
-                            <th colSpan={"3"}>Create a Table</th></tr>
-                        <tr>
-                            <td><label htmlFor="table_name">Table Name:</label></td>
-                            <td><label htmlFor="capacity">Capacity:</label></td>
-                        </tr>
-                        <tr>
-                            <td><input name="table_name"
+                            <td><label htmlFor="table_name">Table Name:</label>
+                       <input name="table_name"
                                 id="table_name"
                                 placeholder="Table Name"
                                 type="text"
                                 onChange={handleTableChange}
-                                value={tableFormData.table_name} required /></td>
-                            <td><input name="capacity"
+                                value={tableFormData.table_name} required /></td></tr>
+                                <tr>
+                                <td><label htmlFor="capacity">Capacity:</label>
+                            <input name="capacity"
                                 id="capacity"
                                 placeholder="Capacity"
                                 type="number"

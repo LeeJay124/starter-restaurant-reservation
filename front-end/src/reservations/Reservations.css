@@ -1,0 +1,10 @@
+input, select{
+    margin-left: 5px;
+}
+.rtable{
+    /* max-width: none;
+        table-layout: fixed; 
+        word-wrap: break-word; */
+        width: 100%;
+        
+}
