@@ -20,11 +20,12 @@ function read(table_id){
 function create(table) {
     return knex("tables")
       .insert(table)
-      .returning(["capacity", "table_name"])
+      .returning(["capacity", "table_name", "table_id"])
       .then((data) => {
         return {
             capacity: Number(data[0].capacity), 
-            table_name: data[0].table_name
+            table_name: data[0].table_name, 
+            table_id: data[0].table_id
         }
       });
   }

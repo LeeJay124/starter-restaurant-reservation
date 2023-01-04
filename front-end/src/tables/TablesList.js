@@ -2,12 +2,10 @@ import React, {useState, useEffect} from "react";
 import Table from "./Table";
 import { finishTable, listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
-import { useHistory } from "react-router-dom";
 import "./Tables.css";
 
 
 function TablesList() {
-  const history = useHistory();
 
   const [tables, setTables] = useState([]);
   const [tablesError, setTablesError] = useState(null);
@@ -40,7 +38,6 @@ function TablesList() {
         const updatedTables = await listTables(abortController.signal);
 
 setTables(updatedTables);
-history.go();
 
       }
     catch (error) {
