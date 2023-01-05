@@ -11,6 +11,10 @@ input, select{
 .ljTable{
     width: 50%;
 }
+.ljbutton{
+    width:70px;
+    margin:2px;
+}
 @media all and (max-width: 500px){
     .ljTable{
       width: 100%;
