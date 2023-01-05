@@ -39,11 +39,13 @@ loadDashboard();
 
 async function resetReservations(){
   const abortController = new AbortController();
-
+try{
   const reservationsFromAPI = await listReservations({ date: newDate }, abortController.signal);
   const reservationsToDisplay = reservationsFromAPI.filter((item)=> item.status !== "cancelled");
   setReservations(reservationsToDisplay);
-
+}catch(error){
+  setReservationsError(error)
+}
 }
   return (
     <main>
