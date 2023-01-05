@@ -34,7 +34,7 @@ function TablesList({resetReservations}) {
 
     try {
         await finishTable(table_id, abortController.signal);
-        resetReservations();
+        await resetReservations();
 
         const updatedTables = await listTables(abortController.signal);
 
