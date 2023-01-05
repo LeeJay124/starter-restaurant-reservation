@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from "react";
 import Table from "./Table";
-import { finishTable, listTables } from "../utils/api";
+import { finishTable,listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import "./Tables.css";
 
 
-function TablesList() {
+function TablesList({resetReservations}) {
 
   const [tables, setTables] = useState([]);
   const [tablesError, setTablesError] = useState(null);
@@ -34,6 +34,7 @@ function TablesList() {
 
     try {
         await finishTable(table_id, abortController.signal);
+        resetReservations();
 
         const updatedTables = await listTables(abortController.signal);
 

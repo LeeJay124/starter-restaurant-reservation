@@ -37,7 +37,14 @@ const newDate = useQuery().get("date") ?? date;
 loadDashboard();
   }, [newDate]);
 
+async function resetReservations(){
+  const abortController = new AbortController();
 
+  const reservationsFromAPI = await listReservations({ date: newDate }, abortController.signal);
+  const reservationsToDisplay = reservationsFromAPI.filter((item)=> item.status !== "cancelled");
+  setReservations(reservationsToDisplay);
+
+}
   return (
     <main>
       <h2 className="pt-3">Reservations for date: {newDate}</h2>
@@ -55,7 +62,7 @@ loadDashboard();
       
       <ErrorAlert error={reservationsError} />
       <ReservationsList reservations={reservations} />
-      <TablesList />
+      <TablesList resetReservations={resetReservations}/>
     </main>
   );
 }
