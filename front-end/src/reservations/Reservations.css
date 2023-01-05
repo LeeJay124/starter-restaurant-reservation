@@ -5,6 +5,19 @@ input, select{
     /* max-width: none;
         table-layout: fixed; 
         word-wrap: break-word; */
-        width: 100%;
-        
+        /* width: 100%; */
+        overflow-x: auto;
+}
+.ljTable{
+    width: 50%;
+}
+@media all and (max-width: 500px){
+    .ljTable{
+      width: 100%;
+    }
+}
+@media all and (min-width: 800px){
+    .rtable{
+      width: 100%;
+    }
 }

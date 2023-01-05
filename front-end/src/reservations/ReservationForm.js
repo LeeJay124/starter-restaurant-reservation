@@ -1,5 +1,6 @@
 import React from "react";
 import {useHistory} from "react-router-dom";
+import "./Reservations.css";
 
 function ReservationForm ({reservationFormData, handleReservationChange, handleReservationSubmit}){
 const history = useHistory();
@@ -60,7 +61,7 @@ else{
          <div className="m-2 errors"></div>
 
         <form name="Reservations" onSubmit={formValidation}>
-        <table className="table table-bordered table-condensed">
+        <table className="table table-bordered ljTable">
           <tbody>
           <tr className="table-dark text-dark"><th colSpan={"3"}>Add/Edit a Reservation</th></tr>
             <tr>

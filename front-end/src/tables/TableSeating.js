@@ -137,7 +137,7 @@ const reservationDate = reservation.reservation_date;
                 <ErrorAlert error={reservationError} />
             }
             <form name="TableSeating" onSubmit={formValidation}>
-                <table className="table table-bordered table-condensed">
+                <table className="table table-bordered table-condensed ljTable">
                     <tbody>
                         <tr className="table-dark text-dark">
                             <th colSpan={"3"}>Seat a Reservation</th></tr>
