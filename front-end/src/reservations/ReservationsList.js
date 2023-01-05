@@ -45,7 +45,7 @@ function ReservationsList({reservations}) {
                 <ErrorAlert error={reservationError} />
             }
       <div className="d-md-flex mb-3">   
-      <table className="table rtable table-striped table-hover ">
+      <table className="table rtable table-striped table-hover table-responsive">
         <tbody>
           <tr>
           <td>First Name</td>

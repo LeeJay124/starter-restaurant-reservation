@@ -45,7 +45,7 @@ const handleSearchChange = ({ target }) => {
             }
       <div className="d-md-flex mb-3 pt-3">
       <form name="Tables" onSubmit={handleSearch}>
-                <table className="table table-bordered table-condensed">
+                <table className="table table-bordered table-condensed ljTable">
 <tbody>
 <tr className="table-dark text-dark"><th>Search for a Reservation</th></tr>
 <tr>

@@ -56,7 +56,7 @@ setTables(updatedTables);
       <h2>Tables</h2>
       <ErrorAlert error={tablesError} />
       <div className="d-md-flex mb-3">
-        <table className="table bordered table-striped table-hover table-condensed">
+        <table className="table rtable table-striped table-hover table-responsive">
           <tbody>
             <tr>
               <td>Table Name</td>

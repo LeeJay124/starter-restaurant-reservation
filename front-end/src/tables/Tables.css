@@ -1,6 +1,15 @@
 input, select{
     margin-left: 5px;
+    width: 150px;
 }
-.table{
-    width: 75%;
+.ljtable2{
+    width: 100%;
+}
+.ljTable{
+    width: 50%;
+}
+@media all and (max-width: 500px){
+    .ljTable{
+      width: 100%;
+    }
 }

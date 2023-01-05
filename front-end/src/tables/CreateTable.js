@@ -90,7 +90,7 @@ const tableFormatted={
                 <ErrorAlert error={tablesErrors} />
             }
             <form name="Tables" onSubmit={formValidation}>
-                <table className="table table-bordered table-condensed">
+                <table className="table table-bordered table-condensed ljTable">
                     <tbody>
                         <tr className="table-dark text-dark">
                             <th>Create a Table</th></tr>
