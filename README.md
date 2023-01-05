@@ -2,7 +2,9 @@
 
 > This is a reservation system for the startup and fine dining restaurant, _Periodic Tables_.
 > The software is used only by restaurant personnel when a customer calls to request a reservation.
-> [Periodic Tables](https://capstonereservationfrontend.onrender.com)
+<br/>
+
+### Application Link: [Periodic Tables](https://capstonereservationfrontend.onrender.com)
 
 <br/>
 <br/>
